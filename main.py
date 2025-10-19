@@ -18,6 +18,7 @@ def main():
         sys.exit(1)
     user_prompt = " ".join(args)
 
+    # Provide API key 
     api_key = os.environ.get("GEMINI_API_KEY")
     client = genai.Client(api_key=api_key)
 
