@@ -7,7 +7,6 @@ from google.genai import types
 def main():
     load_dotenv()
 
-    messages = types.Content(role="user", parts=[types.Part(text=user_prompt)])
     args = sys.argv[1:]
 
     # Check if user passed arguments
@@ -18,6 +17,8 @@ def main():
         sys.exit(1)
     user_prompt = " ".join(args)
 
+    messages = types.Content(role="user", parts=[types.Part(text=user_prompt)])
+
     # Provide API key 
     api_key = os.environ.get("GEMINI_API_KEY")
     client = genai.Client(api_key=api_key)
@@ -27,10 +28,12 @@ def main():
         contents=messages
         )
     
-    print("Prompt tokens:", response.usage_metadata.prompt_token_count)
-    print("Response tokens:", response.usage_metadata.candidates_token_count)
     print("Response:")
     print(response.text)
+    if '--verbose' in args:
+        print("User prompt:", user_prompt)
+        print("Prompt tokens:", response.usage_metadata.prompt_token_count)
+        print("Response tokens:", response.usage_metadata.candidates_token_count)
 
 
 if __name__ == "__main__":
