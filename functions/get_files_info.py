@@ -4,8 +4,6 @@ def get_files_info(working_directory, directory="."):
     working_abs = os.path.abspath(working_directory)
     file_path = os.path.join(working_abs, directory)
     absolute_path = os.path.abspath(file_path)
-    is_dir = os.path.isdir(absolute_path)
-    # size = os.path.getsize(file_path)
     
     if not (absolute_path == working_abs or absolute_path.startswith(working_abs + os.sep)):
         return f'Error: Cannot list "{directory}" as it is outside the permitted working directory'
