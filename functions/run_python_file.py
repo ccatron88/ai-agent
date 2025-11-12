@@ -1,4 +1,5 @@
 import os
+import subprocess
 
 def run_python_file(working_directory, file_path, args=[]):
     working_abs = os.path.abspath(working_directory)
@@ -14,4 +15,4 @@ def run_python_file(working_directory, file_path, args=[]):
     if not full_path.endswith('.py'):
         return f'Error: "{file_path}" is not a Python file.'
 
-    subprocess.run()
+    subprocess.run(timeout=30, stdout=True, stderr=True)
