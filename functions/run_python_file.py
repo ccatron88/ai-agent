@@ -20,3 +20,4 @@ def run_python_file(working_directory, file_path, args=[]):
     result = subprocess.run(abs_file_path, timeout=30, capture_output=True, args=args)
 
     print(result)
+    return result
