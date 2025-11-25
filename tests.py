@@ -4,4 +4,4 @@ from functions.write_file import write_file
 from functions.run_python_file import run_python_file
 
 # print(run_python_file("calculator", "main.py"))
-print(get_files_info("calculator", "."))
+print(run_python_file("calculator", "main.py"))
