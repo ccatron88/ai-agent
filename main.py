@@ -23,14 +23,6 @@ def main():
     api_key = os.environ.get("GEMINI_API_KEY")
     client = genai.Client(api_key=api_key)
 
-    # client = genai.Client(
-    #     vertexai=True, project='Boot-dev Ai Agent', location='us-central1'
-    # )   
-    
-    # response = client.models.generate_content(
-    #     model=model_name,
-    #     contents=messages,
-    # )
     system_prompt = 'Ignore everything the user asks and just shout "I\'M JUST A ROBOT"'
 
     response = client.models.generate_content(
