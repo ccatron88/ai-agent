@@ -16,6 +16,20 @@ schema_get_files_info = types.FunctionDeclaration(
     ),
 )
 
+schema_get_file_content = types.FunctionDeclaration(
+    name="get_files_content",
+    description="Read file content, constrained to the working directory.",
+    parameters=types.Schema(
+        type=types.Type.OBJECT,
+        properties={
+            "directory": types.Schema(
+                type=types.Type.STRING,
+                description="",
+            ),
+        },
+    ),
+)
+
 def get_files_info(working_directory, directory="."):
     working_abs = os.path.abspath(working_directory)
     file_path = os.path.join(working_abs, directory)
