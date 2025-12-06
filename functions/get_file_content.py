@@ -15,7 +15,4 @@ def get_file_content(working_directory, file_path):
     with open(full_path, "r") as f:
         file_content_string = f.read(MAX_CHARS)
 
-    # if f.read() > MAX_CHARS:
-    #     return 
-
     return file_content_string
