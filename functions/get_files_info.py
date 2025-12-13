@@ -1,7 +1,6 @@
 import os
 from google.genai import types
 
-
 schema_get_files_info = types.FunctionDeclaration(
     name="get_files_info",
     description="Lists files in the specified directory along with their sizes, constrained to the working directory.",
@@ -11,48 +10,6 @@ schema_get_files_info = types.FunctionDeclaration(
             "directory": types.Schema(
                 type=types.Type.STRING,
                 description="The directory to list files from, relative to the working directory. If not provided, lists files in the working directory itself.",
-            ),
-        },
-    ),
-)
-
-schema_get_file_content = types.FunctionDeclaration(
-    name="get_file_content",
-    description="Read file content, constrained to a max character limit.",
-    parameters=types.Schema(
-        type=types.Type.OBJECT,
-        properties={
-            "read": types.Schema(
-                type=types.Type.STRING,
-                description="Read content of selected files.",
-            ),
-        },
-    ),
-)
-
-schema_run_python_file = types.FunctionDeclaration(
-    name="run_python_file",
-    description="Run a given executable in python format. Receives optional arguments.",
-    parameters=types.Schema(
-        type=types.Type.OBJECT,
-        properties={
-            "execute": types.Schema(
-                type=types.Type.STRING,
-                description="Execute a python file with given arguments.",
-            ),
-        },
-    ),
-)
-
-schema_write_file = types.FunctionDeclaration(
-    name="write_file",
-    description="Write or overwrite a given file with received content data.",
-    parameters=types.Schema(
-        type=types.Type.OBJECT,
-        properties={
-            "write": types.Schema(
-                type=types.Type.STRING,
-                description="Write or overwrite a given file with content provided to function.",
             ),
         },
     ),
