@@ -16,6 +16,7 @@ functions_dict = {
 def call_function(function_call_part, verbose=False):
     function_call_part.args["working_directory"] = "./calculator"
     function_call_result = functions_dict[function_call_part.name](**function_call_part.args)
+    print(function_call_result)
 
     if function_call_part.name not in functions_dict:
         return types.Content(
