@@ -58,7 +58,15 @@ def main():
     )
     
     print("Response:")
-    print(response.text)
+    # print(response.text)
+
+    for function_call in response.function_calls:
+        verbose = False
+        if '--verbose' in args:
+            verbose = True
+        
+        function_call_result = call_function(function_call, verbose=verbose)
+
     if '--verbose' in args:
         print("User prompt:", user_prompt)
         print("Prompt tokens:", response.usage_metadata.prompt_token_count)
