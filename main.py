@@ -65,7 +65,7 @@ def main():
         if '--verbose' in args:
             verbose = True
         
-        function_call_result = call_function(function_call, verbose=verbose)
+        # function_call_result = call_function(function_call, verbose=verbose)
 
     if '--verbose' in args:
         print("User prompt:", user_prompt)
