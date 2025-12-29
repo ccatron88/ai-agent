@@ -50,6 +50,13 @@ def main():
         ]
     )
 
+    function_map = {
+        "get_file_content": get_file_content,
+        "get_files_info": get_files_info,
+        "run_python_file": run_python_file,
+        "write_file": write_file,
+    }
+
     response = client.models.generate_content(
         # model="gemini-2.0-flash-001", 
         model="gemini-2.5-flash", 
