@@ -69,6 +69,8 @@ def main():
 
     for function_call in response.function_calls:
         verbose = False
+        function_name = function_call.name or ""
+        
         if '--verbose' in args:
             verbose = True
         
