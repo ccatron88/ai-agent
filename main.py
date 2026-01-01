@@ -85,15 +85,15 @@ def main():
     if not response.function_calls == None:
         for call in response.function_calls:
             print(f"Calling function: {call.name}({call.args})")
-            return types.Content(
-                role="tool",
-                parts=[
-                    types.Part.from_function_response(
-                        name=function_name,
-                        response={"error": f"Unknown function: {function_name}"},
-                    )
-                ],
-            )
+            # return types.Content(
+            #     role="tool",
+            #     parts=[
+            #         types.Part.from_function_response(
+            #             name=function_name,
+            #             response={"error": f"Unknown function: {function_name}"},
+            #         )
+            #     ],
+            # )
 
 
 if __name__ == "__main__":
