@@ -12,7 +12,8 @@ from google.genai import types
 def main():
     load_dotenv()
 
-    args = sys.argv[1:]
+    # args = sys.argv[1:]
+    args = dict(function_call.args) if function_call.args else {}
 
     # Check if user passed arguments
     if not args:
@@ -85,15 +86,15 @@ def main():
     if not response.function_calls == None:
         for call in response.function_calls:
             print(f"Calling function: {call.name}({call.args})")
-            # return types.Content(
-            #     role="tool",
-            #     parts=[
-            #         types.Part.from_function_response(
-            #             name=function_name,
-            #             response={"error": f"Unknown function: {function_name}"},
-            #         )
-            #     ],
-            # )
+            return types.Content(
+                role="tool",
+                parts=[
+                    types.Part.from_function_response(
+                        name=function_name,
+                        response={"error": f"Unknown function: {function_name}"},
+                    )
+                ],
+            )
 
 
 if __name__ == "__main__":
