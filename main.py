@@ -95,6 +95,15 @@ def main():
                     )
                 ],
             )
+    return types.Content(
+        role="tool",
+        parts=[
+            types.Part.from_function_response(
+                name=function_name,
+                response={"result": function_result},
+            )
+        ],
+    )
 
 
 if __name__ == "__main__":
