@@ -64,7 +64,7 @@ def main():
         contents=messages,
         config=types.GenerateContentConfig(tools=[available_functions], system_instruction=system_prompt),
     )
-    
+
     print("Response:")
     # print(response.text)
 
@@ -83,6 +83,16 @@ def main():
         print("Response tokens:", response.usage_metadata.candidates_token_count)
         # Print out result of AI function call
         print(function_call_result)
+        # Check that this goes here
+        return types.Content(
+            role="tool",
+            parts=[
+                types.Part.from_function_response(
+                    name=function_name,
+                    response={"result": function_result},
+                )
+            ],
+        )
     if not response.function_calls == None:
         for call in response.function_calls:
             print(f"Calling function: {call.name}({call.args})")
@@ -95,16 +105,6 @@ def main():
                     )
                 ],
             )
-    # Need to check if this goes here
-    # return types.Content(
-    #     role="tool",
-    #     parts=[
-    #         types.Part.from_function_response(
-    #             name=function_name,
-    #             response={"result": function_result},
-    #         )
-    #     ],
-    # )
 
 
 if __name__ == "__main__":
