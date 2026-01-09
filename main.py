@@ -42,21 +42,14 @@ def main():
     All paths you provide should be relative to the working directory. You do not need to specify the working directory in your function calls as it is automatically injected for security reasons.
     """
 
-    available_functions = types.Tool(
-        function_declarations=[
-            schema_get_files_info,
-            schema_get_file_content,
-            schema_run_python_file,
-            schema_write_file,
-        ]
-    )
-
-    function_map = {
-        "get_file_content": get_file_content,
-        "get_files_info": get_files_info,
-        "run_python_file": run_python_file,
-        "write_file": write_file,
-    }
+    # available_functions = types.Tool(
+    #     function_declarations=[
+    #         schema_get_files_info,
+    #         schema_get_file_content,
+    #         schema_run_python_file,
+    #         schema_write_file,
+    #     ]
+    # )
 
     response = client.models.generate_content(
         # model="gemini-2.0-flash-001", 
