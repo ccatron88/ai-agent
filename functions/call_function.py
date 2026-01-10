@@ -26,6 +26,9 @@ def call_function(function_call, verbose=False):
     function_call_result = functions_dict[function_call.name](**function_call.args)
     print(function_call_result)
 
+    # Still need to fix this
+    # Import or change the 
+    # values of the keys?
     function_map = {
         "get_file_content": get_file_content,
         "get_files_info": get_files_info,
