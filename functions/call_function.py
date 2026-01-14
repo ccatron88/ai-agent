@@ -26,13 +26,12 @@ def call_function(function_call, verbose=False):
     function_call_result = functions_dict[function_call.name](**function_call.args)
     print(function_call_result)
 
-    # function_map = {
-    #     "get_file_content": get_file_content,
-    #     "get_files_info": get_files_info,
-    #     "run_python_file": run_python_file,
-    #     "write_file": write_file,
-    # }
-    
+    function_map = {
+        "get_file_content": get_file_content,
+        "get_files_info": get_files_info,
+        "run_python_file": run_python_file,
+        "write_file": write_file,
+    }
 
     if function_call.name not in available_functions:
         return types.Content(
@@ -42,6 +41,7 @@ def call_function(function_call, verbose=False):
                 response={"error": f"Unknown function: {function_call.name}"}
             )]
         )
+    function_name = function_call.name or ""
 
     if verbose:
         print(f"Calling function: {function_call.name}({function_call.args})")
