@@ -74,16 +74,7 @@ def main():
         print("Response tokens:", response.usage_metadata.candidates_token_count)
         # Print out result of AI function call
         print(function_call_result)
-        # Check that this goes here
-        return types.Content(
-            role="tool",
-            parts=[
-                types.Part.from_function_response(
-                    name=function_name,
-                    response={"result": function_result},
-                )
-            ],
-        )
+        
     if not response.function_calls == None:
         for call in response.function_calls:
             print(f"Calling function: {call.name}({call.args})")

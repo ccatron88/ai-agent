@@ -42,13 +42,24 @@ def call_function(function_call, verbose=False):
         print(f" - Calling function: {function_call.name}")
 
     try:
-        function_call_result = functions_dict[function_call.name](**function_call.args)
+        # function_call_result = functions_dict[function_call.name](**function_call.args)
+        # return types.Content(
+        #     role="tool",
+        #     parts=[types.Part.from_function_response(
+        #         name=function_call_part.name,
+        #         response={"result": function_call_result}
+        #     )]
+        # )
+        
+        # Check that this goes here
         return types.Content(
             role="tool",
-            parts=[types.Part.from_function_response(
-                name=function_call_part.name,
-                response={"result": function_call_result}
-            )]
+            parts=[
+                types.Part.from_function_response(
+                    name=function_name,
+                    response={"result": function_result},
+                )
+            ],
         )
     except Exception as e:
         return types.Content(
