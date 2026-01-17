@@ -50,17 +50,17 @@ def call_function(function_call, verbose=False):
         #         response={"result": function_call_result}
         #     )]
         # )
-        
+
         # Check that this goes here
-        return types.Content(
-            role="tool",
-            parts=[
-                types.Part.from_function_response(
-                    name=function_name,
-                    response={"result": function_result},
-                )
-            ],
-        )
+        # return types.Content(
+        #     role="tool",
+        #     parts=[
+        #         types.Part.from_function_response(
+        #             name=function_name,
+        #             response={"result": function_result},
+        #         )
+        #     ],
+        # )
     except Exception as e:
         return types.Content(
             role="tool",
