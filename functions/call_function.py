@@ -15,7 +15,7 @@ available_functions = types.Tool(
 )
 
 def call_function(function_call, verbose=False):
-    function_call.args["working_directory"] = "./calculator"
+    args = dict(function_call.args) if function_call.args else function_call.args["working_directory"] = "./calculator"
     function_call_result = functions_dict[function_call.name](**function_call.args)
     print(function_call_result)
 
@@ -51,16 +51,16 @@ def call_function(function_call, verbose=False):
         #     )]
         # )
 
-        # Check that this goes here
-        # return types.Content(
-        #     role="tool",
-        #     parts=[
-        #         types.Part.from_function_response(
-        #             name=function_name,
-        #             response={"result": function_result},
-        #         )
-        #     ],
-        # )
+        #Check that this goes here
+        return types.Content(
+            role="tool",
+            parts=[
+                types.Part.from_function_response(
+                    name=function_name,
+                    response={"result": function_result},
+                )
+            ],
+        )
     except Exception as e:
         return types.Content(
             role="tool",
