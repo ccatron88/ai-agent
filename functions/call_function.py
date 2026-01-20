@@ -15,8 +15,10 @@ available_functions = types.Tool(
 )
 
 def call_function(function_call, verbose=False):
-    # args = dict(function_call.args) if function_call.args else function_call.args["working_directory"] = "./calculator"
-    function_call_result = functions_dict[function_call.name](**function_call.args)
+    args = dict(function_call.args) if function_call.args else {} 
+    function_call.args["working_directory"] = "./calculator"
+    # function_call_result = functions_dict[function_call.name](**function_call.args)
+    function_call_result = args[function_call.name](**function_call.args)
     print(function_call_result)
 
     function_map = {
