@@ -38,6 +38,18 @@ def call_function(function_call, verbose=False):
         )
     function_name = function_call.name or ""
 
+    if not response.function_calls == None:
+            for call in response.function_calls:
+                print(f"Calling function: {call.name}({call.args})")
+                return types.Content(
+                    role="tool",
+                    parts=[
+                        types.Part.from_function_response(
+                            name=function_name,
+                            response={"error": f"Unknown function: {function_name}"},
+                        )
+                    ],
+                )
     if verbose:
         print(f"Calling function: {function_call.name}({function_call.args})")
     else:
