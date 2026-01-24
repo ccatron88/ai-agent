@@ -17,7 +17,7 @@ available_functions = types.Tool(
 def call_function(function_call, verbose=False):
     args = dict(function_call.args) if function_call.args else {} 
     function_call.args["working_directory"] = "./calculator"
-    function_call_result = args[function_call.name](**function_call.args)
+    function_name = function_call.name or ""
     print(function_call_result)
 
     function_map = {
@@ -27,8 +27,6 @@ def call_function(function_call, verbose=False):
         "write_file": write_file,
     }
 
-    function_call_result = function_map[function_call.name](**function_call.args)
-
     if function_call.name not in available_functions:
         return types.Content(
             role="tool",
@@ -37,7 +35,9 @@ def call_function(function_call, verbose=False):
                 response={"error": f"Unknown function: {function_call.name}"}
             )]
         )
-    function_name = function_call.name or ""
+    
+    # function_call_result = args[function_call.name](**function_call.args) --> This looks like the old version. Holding just in case.   
+    function_call_result = function_map[function_call.name](**function_call.args)
 
     if not response.function_calls == None:
             for call in response.function_calls:
