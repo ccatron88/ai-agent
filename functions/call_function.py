@@ -39,8 +39,8 @@ def call_function(function_call, verbose=False):
     # function_call_result = args[function_call.name](**function_call.args) --> This looks like the old version. Holding just in case.   
     function_call_result = function_map[function_call.name](**function_call.args)
 
-    if not response.function_calls == None:
-            for call in response.function_calls:
+    if not function_call_result == None:
+            for call in function_call_result:
                 print(f"Calling function: {call.name}({call.args})")
                 return types.Content(
                     role="tool",
