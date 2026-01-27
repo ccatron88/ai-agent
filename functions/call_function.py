@@ -42,15 +42,15 @@ def call_function(function_call, verbose=False):
     if not function_call_result == None:
             for call in function_call_result:
                 print(f"Calling function: {call.name}({call.args})")
-                return types.Content(
-                    role="tool",
-                    parts=[
-                        types.Part.from_function_response(
-                            name=function_name,
-                            response={"error": f"Unknown function: {function_name}"},
-                        )
-                    ],
-                )
+                # return types.Content(
+                #     role="tool",
+                #     parts=[
+                #         types.Part.from_function_response(
+                #             name=function_name,
+                #             response={"error": f"Unknown function: {function_name}"},
+                #         )
+                #     ],
+                # )
             
     if verbose:
         print(f"Calling function: {function_call.name}({function_call.args})")
