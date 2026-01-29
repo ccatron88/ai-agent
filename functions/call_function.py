@@ -35,8 +35,7 @@ def call_function(function_call, verbose=False):
                 response={"error": f"Unknown function: {function_call.name}"}
             )]
         )
-    
-    # function_call_result = args[function_call.name](**function_call.args) --> This looks like the old version. Holding just in case.   
+     
     function_call_result = function_map[function_call.name](**function_call.args)
 
     if not function_call_result == None:
