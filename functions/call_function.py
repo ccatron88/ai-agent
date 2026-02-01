@@ -59,20 +59,20 @@ def call_function(function_call, verbose=False):
     try:
 
         #Check that this goes here
-    #     return types.Content(
-    #         role="tool",
-    #         parts=[
-    #             types.Part.from_function_response(
-    #                 name=function_name,
-    #                 response={"result": function_call_result.parts[0].function_response},
-    #             )
-    #         ],
-    #     )
-    # except Exception as e:
-    #     return types.Content(
-    #         role="tool",
-    #         parts=[types.Part.from_function_response(
-    #             name=function_call_part.name,
-    #             response={"error": f"Error: {e}"}
-    #         )]
-    #     )
+        return types.Content(
+            role="tool",
+            parts=[
+                types.Part.from_function_response(
+                    name=function_name,
+                    response={"result": function_call_result.parts[0].function_response},
+                )
+            ],
+        )
+    except Exception as e:
+        return types.Content(
+            role="tool",
+            parts=[types.Part.from_function_response(
+                name=function_call_part.name,
+                response={"error": f"Error: {e}"}
+            )]
+        )

@@ -68,12 +68,12 @@ def main():
         if '--verbose' in args:
             verbose = True
 
-    if '--verbose' in args:
-        print("User prompt:", user_prompt)
-        print("Prompt tokens:", response.usage_metadata.prompt_token_count)
-        print("Response tokens:", response.usage_metadata.candidates_token_count)
-        # Print out result of AI function call
-        print(function_call_result)
+    # if '--verbose' in args:
+    #     print("User prompt:", user_prompt)
+    #     print("Prompt tokens:", response.usage_metadata.prompt_token_count)
+    #     print("Response tokens:", response.usage_metadata.candidates_token_count)
+    #     # Print out result of AI function call
+    #     print(function_call_result)
         
     
 
