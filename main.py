@@ -5,7 +5,7 @@ from functions.get_files_info import schema_get_files_info
 from functions.get_file_content import schema_get_file_content
 from functions.run_python_file import schema_run_python_file
 from functions.write_file import schema_write_file
-from functions.call_function import call_function
+from functions.call_function import call_function, available_functions
 from google import genai
 from google.genai import types
 
@@ -13,7 +13,7 @@ def main():
     load_dotenv()
 
     # args = sys.argv[1:]
-    args = dict(function_call.args) if function_call.args else { "working_directory": "./calculator"}
+    # args = dict(function_call.args) if function_call.args else { "working_directory": "./calculator"}
 
     # Check if user passed arguments
     if not args:
@@ -42,15 +42,6 @@ def main():
     All paths you provide should be relative to the working directory. You do not need to specify the working directory in your function calls as it is automatically injected for security reasons.
     """
 
-    # available_functions = types.Tool(
-    #     function_declarations=[
-    #         schema_get_files_info,
-    #         schema_get_file_content,
-    #         schema_run_python_file,
-    #         schema_write_file,
-    #     ]
-    # )
-
     response = client.models.generate_content(
         # model="gemini-2.0-flash-001", 
         model="gemini-2.5-flash", 
@@ -59,21 +50,20 @@ def main():
     )
 
     print("Response:")
-    # print(response.text)
+    print(response.text)
 
     for function_call in response.function_calls:
         verbose = False
-        function_name = function_call.name or ""
 
         if '--verbose' in args:
             verbose = True
 
-    # if '--verbose' in args:
-    #     print("User prompt:", user_prompt)
-    #     print("Prompt tokens:", response.usage_metadata.prompt_token_count)
-    #     print("Response tokens:", response.usage_metadata.candidates_token_count)
-    #     # Print out result of AI function call
-    #     print(function_call_result)
+    if verbose:
+        print("User prompt:", user_prompt)
+        print("Prompt tokens:", response.usage_metadata.prompt_token_count)
+        print("Response tokens:", response.usage_metadata.candidates_token_count)
+        # Print out result of AI function call
+        print(function_call)
         
     
 
