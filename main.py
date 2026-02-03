@@ -12,7 +12,7 @@ from google.genai import types
 def main():
     load_dotenv()
 
-    # args = sys.argv[1:]
+    
     # args = dict(function_call.args) if function_call.args else { "working_directory": "./calculator"}
 
     # Check if user passed arguments
