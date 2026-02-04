@@ -15,7 +15,6 @@ available_functions = types.Tool(
 )
 
 def call_function(function_call, verbose=False):
-    args = dict(function_call.args) if function_call.args else {} 
     function_call.args["working_directory"] = "./calculator"
     function_name = function_call.name or ""
     print(function_call_result)
@@ -37,6 +36,7 @@ def call_function(function_call, verbose=False):
         )
      
     function_call_result = function_map[function_call.name](**function_call.args)
+    args = dict(function_call.args) if function_call.args else {} 
 
     if not function_call_result == None:
             for call in function_call_result:
@@ -64,7 +64,7 @@ def call_function(function_call, verbose=False):
             parts=[
                 types.Part.from_function_response(
                     name=function_name,
-                    response={"result": function_call_result.parts[0].function_response},
+                    response={"result": function_call_result},
                 )
             ],
         )
@@ -72,7 +72,7 @@ def call_function(function_call, verbose=False):
         return types.Content(
             role="tool",
             parts=[types.Part.from_function_response(
-                name=function_call_part.name,
+                name=function_call_result,
                 response={"error": f"Error: {e}"}
             )]
         )
