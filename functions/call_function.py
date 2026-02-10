@@ -53,10 +53,10 @@ def call_function(function_call, verbose=False):
 
     try:
 
-        if verbose:
-            print(f"-> {function_call_result.parts[0].function_response.response}")
-        else:
-            print(f" - Calling function: {function_call.name}")
+        # if verbose:
+        #     print(f"-> {function_call_result.parts[0].function_response.response}")
+        # else:
+        #     print(f" - Calling function: {function_call.name}")
 
         #Check that this goes here
         return types.Content(
