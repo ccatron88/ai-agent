@@ -15,9 +15,7 @@ available_functions = types.Tool(
 )
 
 def call_function(function_call, verbose=False):
-    function_call.args["working_directory"] = "./calculator"
     function_name = function_call.name or ""
-    print(function_call_result)
 
     function_map = {
         "get_file_content": get_file_content,
@@ -26,45 +24,35 @@ def call_function(function_call, verbose=False):
         "write_file": write_file,
     }
 
-    if function_call.name not in available_functions:
-        return types.Content(
-            role="tool",
-            parts=[types.Part.from_function_response(
-                name=function_call.name,
-                response={"error": f"Unknown function: {function_call.name}"}
-            )]
-        )
-     
-    function_call_result = function_map[function_call.name](**function_call.args)
-    args = dict(function_call.args) if function_call.args else {} 
-
-    if not function_call_result == None:
-            for call in function_call_result:
-                print(f"Calling function: {call.name}({call.args})")
-                return types.Content(
-                    role="tool",
-                    parts=[
-                        types.Part.from_function_response(
-                            name=function_name,
-                            response={"error": f"Unknown function: {function_name}"},
-                        )
-                    ],
-                )
-
     try:
-
         if verbose:
-            print(f"-> {function_call_result.parts[0].function_response.response}")
+            print(f"Calling function: {function_call.name}({function_call.args})")
         else:
             print(f" - Calling function: {function_call.name}")
 
-        #Check that this goes here
+        if function_name not in function_map:
+            return types.Content(
+                role="tool",
+                parts=[
+                    types.Part.from_function_response(
+                        name=function_name,
+                        response={"error": f"Unknown function: {function_name}"},
+                    )
+                ],
+            )
+        
+        args = dict(function_call.args) if function_call.args else {}
+        args["working_directory"] = "./calculator"
+            
+        function_result = function_map[function_name](**args)
+
+        
         return types.Content(
             role="tool",
             parts=[
                 types.Part.from_function_response(
                     name=function_name,
-                    response={"result": function_call_result},
+                    response={"result": function_result},
                 )
             ],
         )
@@ -72,7 +60,7 @@ def call_function(function_call, verbose=False):
         return types.Content(
             role="tool",
             parts=[types.Part.from_function_response(
-                name=function_call_result,
+                name=function_result,
                 response={"error": f"Error: {e}"}
             )]
         )

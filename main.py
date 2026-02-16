@@ -13,7 +13,7 @@ def main():
     load_dotenv()
 
     
-    # args = dict(function_call.args) if function_call.args else { "working_directory": "./calculator"}
+    args = sys.argv[1:]
 
     # Check if user passed arguments
     if not args:
