@@ -42,12 +42,14 @@ def main():
     All paths you provide should be relative to the working directory. You do not need to specify the working directory in your function calls as it is automatically injected for security reasons.
     """
 
-    response = client.models.generate_content(
-        # model="gemini-2.0-flash-001", 
-        model="gemini-2.5-flash", 
-        contents=messages,
-        config=types.GenerateContentConfig(tools=[available_functions], system_instruction=system_prompt),
-    )
+    # response = client.models.generate_content(
+    #     # model="gemini-2.0-flash-001", 
+    #     model="gemini-2.5-flash", 
+    #     contents=messages,
+    #     config=types.GenerateContentConfig(tools=[available_functions], system_instruction=system_prompt),
+    # )
+
+    response = call_function(args)
 
     print("Response:")
     print(response.text)
