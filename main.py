@@ -42,17 +42,18 @@ def main():
     All paths you provide should be relative to the working directory. You do not need to specify the working directory in your function calls as it is automatically injected for security reasons.
     """
 
-    # response = client.models.generate_content(
-    #     # model="gemini-2.0-flash-001", 
-    #     model="gemini-2.5-flash", 
-    #     contents=messages,
-    #     config=types.GenerateContentConfig(tools=[available_functions], system_instruction=system_prompt),
-    # )
+    response = client.models.generate_content(
+        # model="gemini-2.0-flash-001", 
+        model="gemini-2.5-flash", 
+        contents=messages,
+        config=types.GenerateContentConfig(tools=[available_functions], system_instruction=system_prompt),
+    )
 
     response = call_function(args)
 
     print("Response:")
     print(response.text)
+
 
     for function_call in response.function_calls:
         verbose = False
@@ -60,12 +61,18 @@ def main():
         if '--verbose' in args:
             verbose = True
 
-    if verbose:
-        print("User prompt:", user_prompt)
-        print("Prompt tokens:", response.usage_metadata.prompt_token_count)
-        print("Response tokens:", response.usage_metadata.candidates_token_count)
-        # Print out result of AI function call
-        print(function_call)
+        call_function(function_call, verbose)
+
+
+    # Old method of just printing
+    # to screen the output
+    # -------------------------------------
+    # if verbose:
+    #     print("User prompt:", user_prompt)
+    #     print("Prompt tokens:", response.usage_metadata.prompt_token_count)
+    #     print("Response tokens:", response.usage_metadata.candidates_token_count)
+    #     # Print out result of AI function call
+    #     print(function_call)
         
     
 
