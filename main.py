@@ -61,7 +61,10 @@ def main():
         if '--verbose' in args:
             verbose = True
 
-        call_function(function_call, verbose)
+        function_call_result = call_function(function_call, verbose)
+
+        if function_call_result.parts is None:
+            return
 
 
     # Old method of just printing
