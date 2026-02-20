@@ -1,10 +1,6 @@
 import os
 import sys
 from dotenv import load_dotenv
-from functions.get_files_info import schema_get_files_info
-from functions.get_file_content import schema_get_file_content
-from functions.run_python_file import schema_run_python_file
-from functions.write_file import schema_write_file
 from functions.call_function import call_function, available_functions
 from google import genai
 from google.genai import types
@@ -22,6 +18,7 @@ def main():
         print('Example: python main.py "How do I build a calculator app?"')
         sys.exit(1)
     user_prompt = " ".join(args)
+    verbose = "--verbose" in args
 
     messages = types.Content(role="user", parts=[types.Part(text=user_prompt)])
 
@@ -49,36 +46,26 @@ def main():
         config=types.GenerateContentConfig(tools=[available_functions], system_instruction=system_prompt),
     )
 
-    response = call_function(args)
+    function_call_results = []
 
     print("Response:")
-    print(response.text)
-
 
     for function_call in response.function_calls:
-        verbose = False
-
-        if '--verbose' in args:
-            verbose = True
 
         function_call_result = call_function(function_call, verbose)
 
-        if function_call_result.parts is None:
-            return
-
-
-    # Old method of just printing
-    # to screen the output
-    # -------------------------------------
-    # if verbose:
-    #     print("User prompt:", user_prompt)
-    #     print("Prompt tokens:", response.usage_metadata.prompt_token_count)
-    #     print("Response tokens:", response.usage_metadata.candidates_token_count)
-    #     # Print out result of AI function call
-    #     print(function_call)
+        parts = function_call_result.parts
+        if not parts:
+            raise Exception("No parts returned by function: call_function()")
         
-    
+        fr = function_call_result.parts[0].function_response
+        if fr is None or fr.response is None:
+            raise Exception("No function_response/response returned by call_function()")
 
+        function_call_results.append(function_call_result.parts[0])
+        
+        if verbose:
+            print(f"-> {fr.response}")
 
 if __name__ == "__main__":
     main()
