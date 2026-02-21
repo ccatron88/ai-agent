@@ -56,11 +56,14 @@ def call_function(function_call, verbose=False):
                 )
             ],
         )
+    
     except Exception as e:
         return types.Content(
             role="tool",
-            parts=[types.Part.from_function_response(
-                name=function_result,
-                response={"error": f"Error: {e}"}
-            )]
+            parts=[
+                types.Part.from_function_response(
+                    name=function_name,
+                    response={"error": f"Error: {e}"}
+                )
+            ],
         )

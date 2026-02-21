@@ -17,7 +17,9 @@ def main():
         print('\nUsage: python main.py "your prompt here"')
         print('Example: python main.py "How do I build a calculator app?"')
         sys.exit(1)
-    user_prompt = " ".join(args)
+
+    prompt_args = [a for a in args if a != "--verbose"]
+    user_prompt = " ".join(prompt_args)
     verbose = "--verbose" in args
 
     messages = types.Content(role="user", parts=[types.Part(text=user_prompt)])
@@ -63,7 +65,7 @@ def main():
             raise Exception("No function_response/response returned by call_function()")
 
         function_call_results.append(function_call_result.parts[0])
-        
+
         if verbose:
             print(f"-> {fr.response}")
 
