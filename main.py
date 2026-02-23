@@ -8,9 +8,14 @@ from google.genai import types
 def main():
     load_dotenv()
 
-    
+    args = sys.argv[1:]
+    prompt_args = [a for a in args if a != "--verbose"]
+    user_prompt = " ".join(prompt_args)
+    verbose = "--verbose" in args
+
+    messages = [types.Content(role="user", parts=[types.Part(text=user_prompt)])]
+
     for _ in range(20):
-        args = sys.argv[1:]
 
         # Check if user passed arguments
         if not args:
@@ -19,11 +24,6 @@ def main():
             print('Example: python main.py "How do I build a calculator app?"')
             sys.exit(1)
 
-        prompt_args = [a for a in args if a != "--verbose"]
-        user_prompt = " ".join(prompt_args)
-        verbose = "--verbose" in args
-
-        messages = types.Content(role="user", parts=[types.Part(text=user_prompt)])
 
         # Provide API key 
         api_key = os.environ.get("GEMINI_API_KEY")
@@ -50,11 +50,19 @@ def main():
             config=types.GenerateContentConfig(tools=[available_functions], system_instruction=system_prompt),
         )
 
+        if response.candidates:
+            for candidate in response.candidates:
+                messages.append(candidate.content)
+
+        if not response.function_calls:
+            print("Response:")
+            print(response.text)
+            return
+
         function_call_results = []
 
         print("Response:")
 
-    
         for function_call in response.function_calls:
 
             function_call_result = call_function(function_call, verbose)
@@ -71,6 +79,14 @@ def main():
 
             if verbose:
                 print(f"-> {fr.response}")
+        
+        messages.append(types.Content(role="user", parts=function_call_results))
+
+        if _ == 19:
+            print("Error:")
+            print("No final response was reached")
+            sys.exit(1)
+
 
 if __name__ == "__main__":
     main()
